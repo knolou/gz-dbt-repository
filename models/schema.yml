@@ -77,3 +77,62 @@ sources:
 
           - name: ship_cost
             description: ship costs
+
+      
+      - name : sales_margin
+        description: sales margin
+        columns:
+          - name: products_id
+            description: Primary key
+          - name: date_date
+            description: date of the sale
+          - name: orders_id
+            description: primary key for the order id
+          - name: quantity
+            description: quantity of the product sold
+          - name: purchase_price
+            description: price of the product purchased
+          - name: purchase_cost
+            description: total cost of the purchased products
+          - name: margin
+            description: calculated margin
+
+      - name: orders_margin
+        description: "Model that aggregates margin and cost data for each order"
+        columns:
+          - name: orders_id
+            description: "Unique identifier for the order"
+          - name: date_date
+            description: "Date of the order"
+          - name: revenue
+            description: "Total revenue for the order"
+          - name: quantity
+            description: "Total quantity of products in the order"
+          - name: purchase_cost
+            description: "Total cost of the products in the order"
+          - name: margin
+            description: "Calculated margin for the order (revenue - purchase cost)"
+      
+      - name: orders_operational
+        description: orders operational
+        columns:
+          - name: orders_id
+            description: id order
+          - name: date_date
+            description: date order
+          - name: operational_margin
+            description: margin
+          - name: quantity
+            description: quantity products ordered
+          - name: revenue
+            description: revenue
+          - name: purchase_cost
+            description: purchase cost
+          - name: margin
+            description: margin
+          - name: shipping_fee
+            description: frais d'expédition de la commande
+          - name: logcost
+            description: log cost
+          - name: ship_cost
+            description: cout d'expedition 
