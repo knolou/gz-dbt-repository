@@ -5,7 +5,7 @@ sources:
     schema: gz_raw_data
     tables:
       - name: sales
-        identifier: raw_gz_sales
+        identifier: gz_raw_sales
         description: sales of Greenweez / we have on row per product_id found in each orders_id
         columns:
           - name: date_date
@@ -34,7 +34,7 @@ sources:
               - not_null
 
       - name: product
-        identifier: raw_gz_product
+        identifier: gz_raw_product
         description: products of Greenweez / we have a row per product_id and its purchase cost
         columns:
           - name: products_id
@@ -48,7 +48,7 @@ sources:
               - not_null
 
       - name: ship
-        identifier: raw_gz_ship
+        identifier: gz_raw_ship
         description: ship details of Greenweez / we have a row per order_id and its costs
         columns:
           - name: orders_id
@@ -70,15 +70,14 @@ sources:
             description: ship costs
             tests:
               - not_null
-      
       - name: sales_margin
-        identifier: int_sales_margin
         description: calculate margin and purchase cost
         columns:
           - name: orders_id
             description: orders_id
             tests:
               - not_null
+
           - name: date_date
             description: date
             tests:
@@ -98,6 +97,38 @@ sources:
             description: margin
             tests:
               - not_null
-        
+
+
+      - name: orders_margin
+        description: aggregation orders margin
+        columns:
+          - name: orders_id
+            description: orders_id is the primary key
+            tests:
+              - not_null
+          - name: date_date
+            description: date
+            tests:
+              - not_null
+          
+          - name: quantity
+            description : quantity per order
+            tests:
+              - not_null
+
+          - name: revenue
+            description: revenue per order
+            tests:
+              - not_null
+          
+          - name: purchase_cost
+            description : purchase cost per order
+            tests:
+              - not_null
+          
+          - name: margin
+            description: margin per order
+            tests:
+              - not_null  
         
           
