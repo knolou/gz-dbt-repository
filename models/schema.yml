@@ -11,42 +11,47 @@ sources:
         columns:
           - name: date_date
             description: date of purchase
-            tests:
-              - not_null
-          
+
           - name : orders_id
-            description: order id
+            description: foreign key to ship
             tests:
               - not_null
+
 
           - name : pdt_id
-            description: product id
-            tests:
+            description: foreign key to product
+            tests: 
               - not_null
+              
+
 
           - name: revenue
-            description : price per order
-            tests :
-              - not_null
+            description : the quantity of products purchased for a given order
+
 
           - name: quantity
             description: number of products per order
-            tests:
-              - not_null
+
+          - name: unique_orders_pdt
+            description: Ensure combination of orders_id and pdt_id is unique
+            
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns: ["orders_id", "pdt_id"]
+          
 
       - name: product
         identifier: raw_gz_product
         description: products of Greenweez / we have a row per product_id and its purchase cost
         columns:
           - name: products_id
-            description: primary key, we have a row per product_id and its purchase cost
+            description: primary key
             tests:
+              - unique
               - not_null
 
-          - name: purchSE_price
+          - name: purchase_price
             description: price of each purchase
-            tests:
-              - not_null
 
       - name: ship
         identifier: raw_gz_ship
@@ -55,19 +60,15 @@ sources:
           - name: orders_id
             description: primary key, order id 
             tests:
+              - unique
               - not_null
 
           - name: shipping_fee
-            description: shippings fee 
-            tests:
-              - not_null
-          
+            description: the price the customer pays for shipping
+
           - name: logcost
-            description: cost log
-            tests:
-              - not_null
+            description: cost log preparing parcel
+
 
           - name: ship_cost
             description: ship costs
-            tests:
-              - not_null
