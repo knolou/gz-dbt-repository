@@ -71,6 +71,65 @@ sources:
             description: ship costs
             tests:
               - not_null
+      - name: sales_margin
+        description: calculate margin and purchase cost
+        columns:
+          - name: orders_id
+            description: orders_id
+            tests:
+              - not_null
 
+          - name: date_date
+            description: date
+            tests:
+              - not_null
+
+          - name: revenue
+            description: revenue
+            tests:
+              - not_null
+          
+          - name: purchase_cost
+            description : purchase cost
+            tests:
+              - not_null
+          
+          - name: margin
+            description: margin
+            tests:
+              - not_null
+
+
+      - name: orders_margin
+        description: aggregation orders margin
+        columns:
+          - name: orders_id
+            description: orders_id is the primary key
+            tests:
+              - not_null
+          - name: date_date
+            description: date
+            tests:
+              - not_null
+          
+          - name: quantity
+            description : quantity per order
+            tests:
+              - not_null
+
+          - name: revenue
+            description: revenue per order
+            tests:
+              - not_null
+          
+          - name: purchase_cost
+            description : purchase cost per order
+            tests:
+              - not_null
+          
+          - name: margin
+            description: margin per order
+            tests:
+              - not_null  
         
           
