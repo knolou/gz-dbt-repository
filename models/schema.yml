@@ -214,6 +214,9 @@ models:
         description: calculated margin
         tests:
           - not_null
+
+      - name: margin_percent
+        description: margin in percentage
     
     tests:
       - unique:
