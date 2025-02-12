@@ -1,0 +1,211 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: gz_raw_data
+    description: the raw dataset
+    tables:
+      - name: sales
+        identifier: raw_gz_sales
+        description: sales of Greenweez / we have on row per product_id found in each orders_id
+
+        loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+        freshness: 
+          warn_after: {count: 90, period: day}
+        
+        columns:
+          - name: date_date
+            description: date of purchase
+
+          - name : orders_id
+            description: foreign key to ship
+
+
+
+          - name : pdt_id
+            description: foreign key to product             
+
+
+          - name: revenue
+            description : the quantity of products purchased for a given order
+
+
+          - name: quantity
+            description: number of products per order
+
+
+          - name: unique_orders_pdt
+            description: Ensure combination of orders_id and pdt_id is unique
+
+            
+        tests:
+          - dbt_utils.unique_combination_of_columns:
+              combination_of_columns: ["orders_id", "pdt_id"]
+          
+
+      - name: product
+        identifier: raw_gz_product
+        description: products of Greenweez / we have a row per product_id and its purchase cost
+        columns:
+          - name: products_id
+            description: primary key
+
+
+          - name: purchase_price
+            description: price of each purchase
+
+
+      - name: ship
+        identifier: raw_gz_ship
+        description: ship details of Greenweez / we have a row per order_id and its costs
+        columns:
+          - name: orders_id
+            description: primary key, order id 
+
+
+          - name: shipping_fee
+            description: the price the customer pays for shipping
+
+
+          - name: logcost
+            description: cost log preparing parcel
+
+
+
+          - name: ship_cost
+            description: ship costs
+
+models:
+  #Intermediate#
+  - name : int_sales_margin
+    description: sales margin
+    columns:
+      - name: products_id
+        description: Primary key
+        tests:
+          - not_null
+
+      - name: date_date
+        description: date of the order
+        tests:
+          - not_null
+
+      - name: orders_id
+        description: primary key for the order
+        tests:
+          - not_null
+
+      - name: quantity
+        description: quantity of the product sold
+        tests:
+          - not_null
+          
+      - name: purchase_price
+        description: price of the product purchase
+        tests:
+          - not_null
+          
+      - name: purchase_cost
+        description: total cost of the purchased product
+        tests:
+          - not_null
+          
+      - name: margin
+        description: calculated margin
+        tests:
+          - not_null
+    
+    tests:
+      - unique:
+          column_name: "(orders_id || '-' || products_id)"
+
+
+  - name: int_orders_margin
+    description: "Model that aggregates margin and cost data for each order"
+    columns:
+      - name: orders_id
+        description: "Unique identifier for the order"
+        tests:
+          - unique
+          - not_null
+
+      - name: date_date
+        description: "Date of the order"
+        tests:
+          - not_null
+      
+      - name: revenue
+        description: "Total revenue for the order"
+        tests:
+          - not_null
+      
+      - name: quantity
+        description: "Total quantity of products in the order"
+        tests:
+          - not_null
+      
+      - name: purchase_cost
+        description: "Total cost of the products in the order"
+        tests:
+          - not_null
+      
+      - name: margin
+        description: "Calculated margin for the order (revenue - purchase cost)"
+        tests:
+          - not_null
+      
+  
+  - name: int_orders_operational
+    description: orders operational
+    columns:
+      - name: orders_id
+        description: id order primary key
+        tests:
+          - unique
+          - not_null
+          
+      - name: date_date
+        description: date order
+        tests:
+          - not_null
+          
+      - name: operational_margin
+        description: margin
+        tests:
+          - not_null
+          
+      - name: quantity
+        description: quantity products ordered
+        tests:
+          - not_null
+          
+      - name: revenue
+        description: revenue
+        tests:
+          - not_null
+          
+      - name: purchase_cost
+        description: purchase cost
+        tests:
+          - not_null
+          
+      - name: margin
+        description: margin
+        tests:
+          - not_null
+          
+      - name: shipping_fee
+        description: frais d'expédition de la commande
+        tests:
+          - not_null
+          
+      - name: logcost
+        description: log cost
+        tests:
+          - not_null
+          
+      - name: ship_cost
+        description: cout d'expedition
+        tests:
+          - not_null
+          
