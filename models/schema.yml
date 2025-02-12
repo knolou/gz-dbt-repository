@@ -23,9 +23,7 @@ sources:
 
 
           - name : pdt_id
-            description: foreign key to product
-
-              
+            description: foreign key to product             
 
 
           - name: revenue
@@ -77,78 +75,137 @@ sources:
           - name: ship_cost
             description: ship costs
 
+models:
+  #Intermediate#
+  - name : int_sales_margin
+    description: sales margin
+    columns:
+      - name: products_id
+        description: Primary key
+        tests:
+          - not_null
 
-      - name : int_sales_margin
-        description: sales margin
-        columns:
-          - name: products_id
-            description: Primary key
-              
-          - name: date_date
-            description: date of the sale
+      - name: date_date
+        description: date of the order
+        tests:
+          - not_null
 
-              
-          - name: orders_id
-            description: primary key for the order id
+      - name: orders_id
+        description: primary key for the order
+        tests:
+          - not_null
 
-              
-          - name: quantity
-            description: quantity of the product sold
-              
-          - name: purchase_price
-            description: price of the product purchased
-
-              
-          - name: purchase_cost
-            description: total cost of the purchased products
-
-              
-          - name: margin
-            description: calculated margin
-
-
-      - name: int_orders_margin
-        description: "Model that aggregates margin and cost data for each order"
-        columns:
-          - name: orders_id
-            description: "Unique identifier for the order"
-              
-          - name: date_date
-            description: "Date of the order"
+      - name: quantity
+        description: quantity of the product sold
+        tests:
+          - not_null
           
-          - name: revenue
-            description: "Total revenue for the order"
+      - name: purchase_price
+        description: price of the product purchase
+        tests:
+          - not_null
           
-          - name: quantity
-            description: "Total quantity of products in the order"
+      - name: purchase_cost
+        description: total cost of the purchased product
+        tests:
+          - not_null
           
-          - name: purchase_cost
-            description: "Total cost of the products in the order"
-          
-          - name: margin
-            description: "Calculated margin for the order (revenue - purchase cost)"
-          
+      - name: margin
+        description: calculated margin
+        tests:
+          - not_null
+    
+    tests:
+      - unique:
+          column_name: "(orders_id || '-' || products_id)"
+
+
+  - name: int_orders_margin
+    description: "Model that aggregates margin and cost data for each order"
+    columns:
+      - name: orders_id
+        description: "Unique identifier for the order"
+        tests:
+          - unique
+          - not_null
+
+      - name: date_date
+        description: "Date of the order"
+        tests:
+          - not_null
       
-      - name: int_orders_operational
-        description: orders operational
-        columns:
-          - name: orders_id
-            description: id order primary key
-          - name: date_date
-            description: date order
-          - name: operational_margin
-            description: margin
-          - name: quantity
-            description: quantity products ordered
-          - name: revenue
-            description: revenue
-          - name: purchase_cost
-            description: purchase cost
-          - name: margin
-            description: margin
-          - name: shipping_fee
-            description: frais d'expédition de la commande
-          - name: logcost
-            description: log cost
-          - name: ship_cost
-            description: cout d'expedition 
+      - name: revenue
+        description: "Total revenue for the order"
+        tests:
+          - not_null
+      
+      - name: quantity
+        description: "Total quantity of products in the order"
+        tests:
+          - not_null
+      
+      - name: purchase_cost
+        description: "Total cost of the products in the order"
+        tests:
+          - not_null
+      
+      - name: margin
+        description: "Calculated margin for the order (revenue - purchase cost)"
+        tests:
+          - not_null
+      
+  
+  - name: int_orders_operational
+    description: orders operational
+    columns:
+      - name: orders_id
+        description: id order primary key
+        tests:
+          - unique
+          - not_null
+          
+      - name: date_date
+        description: date order
+        tests:
+          - not_null
+          
+      - name: operational_margin
+        description: margin
+        tests:
+          - not_null
+          
+      - name: quantity
+        description: quantity products ordered
+        tests:
+          - not_null
+          
+      - name: revenue
+        description: revenue
+        tests:
+          - not_null
+          
+      - name: purchase_cost
+        description: purchase cost
+        tests:
+          - not_null
+          
+      - name: margin
+        description: margin
+        tests:
+          - not_null
+          
+      - name: shipping_fee
+        description: frais d'expédition de la commande
+        tests:
+          - not_null
+          
+      - name: logcost
+        description: log cost
+        tests:
+          - not_null
+          
+      - name: ship_cost
+        description: cout d'expedition
+        tests:
+          - not_null
+          
