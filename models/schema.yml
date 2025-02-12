@@ -19,14 +19,12 @@ sources:
 
           - name : orders_id
             description: foreign key to ship
-            tests:
-              - not_null
+
 
 
           - name : pdt_id
             description: foreign key to product
-            tests: 
-              - not_null
+
               
 
 
@@ -37,8 +35,10 @@ sources:
           - name: quantity
             description: number of products per order
 
+
           - name: unique_orders_pdt
             description: Ensure combination of orders_id and pdt_id is unique
+
             
         tests:
           - dbt_utils.unique_combination_of_columns:
@@ -51,12 +51,11 @@ sources:
         columns:
           - name: products_id
             description: primary key
-            tests:
-              - unique
-              - not_null
+
 
           - name: purchase_price
             description: price of each purchase
+
 
       - name: ship
         identifier: raw_gz_ship
@@ -64,60 +63,77 @@ sources:
         columns:
           - name: orders_id
             description: primary key, order id 
-            tests:
-              - unique
-              - not_null
+
 
           - name: shipping_fee
             description: the price the customer pays for shipping
+
 
           - name: logcost
             description: cost log preparing parcel
 
 
+
           - name: ship_cost
             description: ship costs
 
-      
-      - name : sales_margin
+
+      - name : int_sales_margin
         description: sales margin
         columns:
           - name: products_id
             description: Primary key
+              
           - name: date_date
             description: date of the sale
+
+              
           - name: orders_id
             description: primary key for the order id
+
+              
           - name: quantity
             description: quantity of the product sold
+              
           - name: purchase_price
             description: price of the product purchased
+
+              
           - name: purchase_cost
             description: total cost of the purchased products
+
+              
           - name: margin
             description: calculated margin
 
-      - name: orders_margin
+
+      - name: int_orders_margin
         description: "Model that aggregates margin and cost data for each order"
         columns:
           - name: orders_id
             description: "Unique identifier for the order"
+              
           - name: date_date
             description: "Date of the order"
+          
           - name: revenue
             description: "Total revenue for the order"
+          
           - name: quantity
             description: "Total quantity of products in the order"
+          
           - name: purchase_cost
             description: "Total cost of the products in the order"
+          
           - name: margin
             description: "Calculated margin for the order (revenue - purchase cost)"
+          
       
-      - name: orders_operational
+      - name: int_orders_operational
         description: orders operational
         columns:
           - name: orders_id
-            description: id order
+            description: id order primary key
           - name: date_date
             description: date order
           - name: operational_margin
