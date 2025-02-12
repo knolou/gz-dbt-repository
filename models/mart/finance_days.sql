@@ -1,7 +1,6 @@
 {{config (
     materialized='table',
     schema='mart'
-    tags=['daily_refresh']
 ) }}
 
 SELECT
