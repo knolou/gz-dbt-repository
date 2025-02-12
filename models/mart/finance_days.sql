@@ -1,6 +1,5 @@
 {{config (
     materialized='table',
-    schema='mart'
 ) }}
 
 SELECT
