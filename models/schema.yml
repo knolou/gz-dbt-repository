@@ -75,6 +75,106 @@ sources:
           - name: ship_cost
             description: ship costs
 
+      - name: adwords
+        identifier: raw_gz_adwords
+        description: data of adwords per day
+        columns:
+          - name: date_date
+            description: date of the campaign, primary key
+          
+          - name: paid_source
+            description: source of ads
+          
+          - name: campaign_key
+            description: id of campaign
+          
+          - name: camPGN_name
+            description: nom de la campagne
+          
+          - name: ads_cost
+            description: cout of campaign
+          
+          - name: impression
+            description: nb of impression
+          
+          - name: click
+            description: cost per clicks
+      
+      - name: bing
+        identifier: raw_gz_bing
+        description: data of criteo per day
+        columns:
+          - name: date_date
+            description: date of the campaign, primary key
+          
+          - name: paid_source
+            description: source of ads
+          
+          - name: campaign_key
+            description: id of campaign
+          
+          - name: camPGN_name
+            description: nom de la campagne
+          
+          - name: ads_cost
+            description: cout of campaign
+          
+          - name: impression
+            description: nb of impression
+          
+          - name: click
+            description: cost per clicks
+      
+      - name: criteo
+        identifier: raw_gz_criteo
+        description: data of criteo per day
+        columns:
+          - name: date_date
+            description: date of the campaign, primary key
+          
+          - name: paid_source
+            description: source of ads
+          
+          - name: campaign_key
+            description: id of campaign
+          
+          - name: camPGN_name
+            description: nom de la campagne
+          
+          - name: ads_cost
+            description: cout of campaign
+          
+          - name: impression
+            description: nb of impression
+          
+          - name: click
+            description: cost per clicks
+      
+      - name: facebook
+        identifier: raw_gz_facebook
+        description: data of fb ads per day
+        columns:
+          - name: date_date
+            description: date of the campaign, primary key
+          
+          - name: paid_source
+            description: source of ads
+          
+          - name: campaign_key
+            description: id of campaign
+          
+          - name: camPGN_name
+            description: nom de la campagne
+          
+          - name: ads_cost
+            description: cout of campaign
+          
+          - name: impression
+            description: nb of impression
+          
+          - name: click
+            description: cost per clicks
+
 models:
   #Intermediate#
   - name : int_sales_margin
@@ -208,4 +308,182 @@ models:
         description: cout d'expedition
         tests:
           - not_null
+  
+  - name: int_campaigns
+    description: data of fb ads per day
+    columns:
+      - name: date_date
+        description: date of the campaign, primary key with campaign_key
+        tests:
+          - not_null
+      
+      - name: paid_source
+        description: source of ads
+        tests:
+          - not_null
+      
+      - name: campaign_key
+        description: id of campaign primary key with campaign key
+        tests:
+          - not_null
+      
+      - name: campaign_name
+        description: nom de la campagne
+        tests:
+          - not_null
+      
+      - name: ads_cost
+        description: cout of campaign
+        tests:
+          - not_null
+      
+      - name: impression
+        description: nb of impression
+        tests:
+          - not_null
+      
+      - name: click
+        description: cost per clicks
+        tests:
+          - not_null
+      
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: ["date_date", "campaign_key"]
+
+  - name: int_campaigns_day
+    description: data of fb ads per day
+    columns:
+      - name: date_date
+        description: date of the campaign, primary key with campaign_key
           
+      - name: ads_cost
+        description: cout of campaign
+      
+      - name: ads_impression
+        description: nb of impression
+      
+      - name: ads_click
+        description: cost per clicks
+  
+  - name: finance_days
+    description: aggregated finance data per day
+    columns:
+      - name: date_date
+        description: date of the financial data
+        tests:
+          - not_null
+          
+      - name: nb_transactions
+        description: nb of transactions per day
+        tests:
+          - not_null
+          
+      - name: operational_margin
+        description: operational margin for the day
+
+      - name: average_basket
+        description: average basket value
+        tests:
+          - not_null
+          
+      - name: average_basket_bis
+        description: other average basket
+        tests:
+          - not_null
+          
+      - name: margin
+        description: margin per day
+        tests:
+          - not_null
+          
+      - name: operational_margin
+        description: operational margin per day
+        tests:
+          - not_null
+          
+      - name: purchase_cost
+        description: price of each purchase
+        tests:
+          - not_null
+          
+      - name: shipping_fee
+        description: cost of each shipping
+        tests:
+          - not_null
+
+  - name: finance_campaigns_days
+    description: aggregated finance data of each campaign per day
+    columns:
+      - name: date_date
+        description: date of the financial data
+        tests:
+          - not_null
+          
+      - name: ads_margin
+        description: margin of ads
+        tests:
+          - not_null
+      
+      - name: average_basket
+        description: average basket
+        tests:
+          - not_null
+      
+      - name: operational_margin
+        description: operational margin per day
+        tests:
+          - not_null
+          
+      - name: ads_cost
+        description: cost of the ads
+        tests:
+          - not_null
+
+      - name: ads_impression
+        description: nb of impressions
+        tests:
+          - not_null
+          
+      - name: ads_clicks
+        description: nb of clicks
+        tests:
+          - not_null
+          
+      - name: quantity
+        description: quantity sold
+        tests:
+          - not_null
+
+      - name: revenue
+        description: revenue from the campaigns
+        tests:
+          - not_null
+          
+      - name: purchase_cost
+        description: price of each purchase
+        tests:
+          - not_null
+          
+      - name: margin
+        description: margin of each campaign
+        tests:
+          - not_null
+      
+      - name: shipping_fee
+        description: shipping fees
+        tests:
+          - not_null
+      
+      - name: logcost
+        description: cost of logs
+        tests:
+          - not_null
+      
+      - name: ship_cost
+        description: cost of each shipment
+        tests:
+          - not_null
+          
+
+
