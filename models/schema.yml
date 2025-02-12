@@ -488,6 +488,79 @@ models:
         description: cost of each shipment
         tests:
           - not_null
+  
+  - name: finance_campaigns_month
+    description: aggregated finance data of each campaign per day
+    columns:
+      - name: datemonth
+        description: month of the financial data
+        tests:
+          - not_null
+          
+      - name: ads_margin
+        description: margin of ads
+        tests:
+          - not_null
+      
+      - name: average_basket
+        description: average basket
+        tests:
+          - not_null
+      
+      - name: operational_margin
+        description: operational margin per day
+        tests:
+          - not_null
+          
+      - name: ads_cost
+        description: cost of the ads
+        tests:
+          - not_null
+
+      - name: ads_impression
+        description: nb of impressions
+        tests:
+          - not_null
+          
+      - name: ads_clicks
+        description: nb of clicks
+        tests:
+          - not_null
+          
+      - name: quantity
+        description: quantity sold
+        tests:
+          - not_null
+
+      - name: revenue
+        description: revenue from the campaigns
+        tests:
+          - not_null
+          
+      - name: purchase_cost
+        description: price of each purchase
+        tests:
+          - not_null
+          
+      - name: margin
+        description: margin of each campaign
+        tests:
+          - not_null
+      
+      - name: shipping_fee
+        description: shipping fees
+        tests:
+          - not_null
+      
+      - name: logcost
+        description: cost of logs
+        tests:
+          - not_null
+      
+      - name: ship_cost
+        description: cost of each shipment
+        tests:
+          - not_null
           
 
 
