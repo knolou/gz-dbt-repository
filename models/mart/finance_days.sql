@@ -1,6 +1,6 @@
 {{config (
     materialized='table',
-    schema='finance'
+    schema='mart'
     tags=['daily_refresh']
 ) }}
 
