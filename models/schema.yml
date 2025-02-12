@@ -369,6 +369,7 @@ models:
       - name: ads_click
         description: cost per clicks
   
+  ## mart/finance #
   - name: finance_days
     description: aggregated finance data per day
     columns:
